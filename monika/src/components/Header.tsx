@@ -6,11 +6,12 @@ import { Phone, Mail, MapPin, Clock, Search, Disc, Menu, X, ShieldCheck } from "
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "#tyres", label: "Tyres & Products" },
-  { href: "#finder", label: "Tyre Finder" },
-  { href: "#why-us", label: "Why Choose Us" },
-  { href: "#testimonials", label: "Reviews" },
-  { href: "#contact", label: "Contact Us" },
+  { href: "/about", label: "About Us" },
+  { href: "/#tyres", label: "Tyres & Products" },
+  { href: "/#finder", label: "Tyre Finder" },
+  { href: "/#why-us", label: "Why Choose Us" },
+  { href: "/#testimonials", label: "Reviews" },
+  { href: "/#contact", label: "Contact Us" },
 ];
 
 export default function Header() {

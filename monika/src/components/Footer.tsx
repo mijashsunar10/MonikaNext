@@ -58,11 +58,12 @@ export default function Footer() {
             <h4 className="font-heading text-lg font-bold text-white uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/" className="hover:text-orange-500 transition-colors">Home Page</Link></li>
-              <li><a href="#finder" className="hover:text-orange-500 transition-colors">Tyre Finder Tool</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Passenger Car Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">SUV & 4x4 Off-Road</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Heavy Truck Tyres</a></li>
-              <li><a href="#why-us" className="hover:text-orange-500 transition-colors">Wheel Alignment Services</a></li>
+              <li><Link href="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
+              <li><Link href="/#finder" className="hover:text-orange-500 transition-colors">Tyre Finder Tool</Link></li>
+              <li><Link href="/#tyres" className="hover:text-orange-500 transition-colors">Passenger Car Tyres</Link></li>
+              <li><Link href="/#tyres" className="hover:text-orange-500 transition-colors">SUV & 4x4 Off-Road</Link></li>
+              <li><Link href="/#tyres" className="hover:text-orange-500 transition-colors">Heavy Truck Tyres</Link></li>
+              <li><Link href="/#why-us" className="hover:text-orange-500 transition-colors">Wheel Alignment Services</Link></li>
             </ul>
           </div>
 
