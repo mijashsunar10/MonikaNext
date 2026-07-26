@@ -1,177 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { Zap, Info, Phone } from "lucide-react";
-
-interface TyreItem {
-  id: string;
-  name: string;
-  brand: string;
-  category: "car" | "suv" | "truck" | "sport" | "bike";
-  size: string;
-  speedRating: string;
-  loadIndex: string;
-  priceEstimate: string;
-  image: string;
-  badge?: string;
-  wetGrip: "A" | "B" | "C";
-  fuelEfficiency: "A" | "B" | "C";
-  noise: string;
-  description: string;
-}
-
-const TYRES_DATA: TyreItem[] = [
-  {
-    id: "1",
-    name: "Turanza T005",
-    brand: "BRIDGESTONE",
-    category: "car",
-    size: "195/65 R15",
-    speedRating: "V (Up to 240 km/h)",
-    loadIndex: "91 (615 kg)",
-    priceEstimate: "Rs. 11,500 - 13,200",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/image-Photoroom-2-1.png",
-    badge: "TOP SELLER",
-    wetGrip: "A",
-    fuelEfficiency: "B",
-    noise: "69 dB",
-    description: "Best-in-class wet braking and turning response. Designed for smooth, noise-free highway cruising.",
-  },
-  {
-    id: "2",
-    name: "Geolandar A/T G015",
-    brand: "YOKOHAMA",
-    category: "suv",
-    size: "265/65 R17",
-    speedRating: "H (Up to 210 km/h)",
-    loadIndex: "112 (1120 kg)",
-    priceEstimate: "Rs. 24,000 - 27,500",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/image-Photoroom-2-1.png",
-    badge: "OFF-ROAD TOUGH",
-    wetGrip: "A",
-    fuelEfficiency: "C",
-    noise: "72 dB",
-    description: "All-terrain monster engineered to conquer rough Nepalese mountain roads and muddy highway conditions.",
-  },
-  {
-    id: "3",
-    name: "Primacy 4+",
-    brand: "MICHELIN",
-    category: "car",
-    size: "205/55 R16",
-    speedRating: "W (Up to 270 km/h)",
-    loadIndex: "91 (615 kg)",
-    priceEstimate: "Rs. 14,800 - 16,500",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/image-Photoroom-2-1.png",
-    badge: "LONGEST TREAD LIFE",
-    wetGrip: "A",
-    fuelEfficiency: "A",
-    noise: "68 dB",
-    description: "Delivers maximum safety built to last over 60,000 km with unmatched silent cabin acoustics.",
-  },
-  {
-    id: "4",
-    name: "Super Lug S+ Radial",
-    brand: "MRF",
-    category: "truck",
-    size: "10.00-20 16PR",
-    speedRating: "K (Up to 110 km/h)",
-    loadIndex: "146/143 (3000 kg)",
-    priceEstimate: "Call for Wholesale Quote",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/tyre.jpeg",
-    badge: "HEAVY FREIGHT",
-    wetGrip: "B",
-    fuelEfficiency: "B",
-    noise: "74 dB",
-    description: "Ultra heavy-duty steel belt radial for high payload commercial trucks operating on steep inclines.",
-  },
-  {
-    id: "5",
-    name: "P Zero Corsa",
-    brand: "PIRELLI",
-    category: "sport",
-    size: "245/40 R18",
-    speedRating: "Y (Up to 300 km/h)",
-    loadIndex: "97 (730 kg)",
-    priceEstimate: "Rs. 32,000 - 36,000",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/image-Photoroom-2-1.png",
-    badge: "TRACK & HIGHWAY",
-    wetGrip: "A",
-    fuelEfficiency: "C",
-    noise: "71 dB",
-    description: "Extreme precision cornering grip developed in motorsport labs for luxury sports cars.",
-  },
-  {
-    id: "6",
-    name: "Secura Zoom F",
-    brand: "CEAT",
-    category: "bike",
-    size: "100/80 - 17",
-    speedRating: "P (Up to 150 km/h)",
-    loadIndex: "52 (200 kg)",
-    priceEstimate: "Rs. 4,200 - 5,100",
-    image: "https://monikasuppliers.com.np/wp-content/uploads/2025/12/image-Photoroom-2-1.png",
-    badge: "BIKE FAVORITE",
-    wetGrip: "A",
-    fuelEfficiency: "A",
-    noise: "67 dB",
-    description: "High direction stability and continuous tread groove for sportbikes and commuter motorcycles.",
-  },
-];
+import Link from "next/link";
+import { Zap, Info, Phone, ArrowRight } from "lucide-react";
+import { TYRES_DATA, TyreItem } from "@/data/tyres";
 
 export default function TyreCategoryShowcase() {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
   const [selectedTyre, setSelectedTyre] = useState<TyreItem | null>(null);
 
-  const filteredTyres = activeCategory === "all"
-    ? TYRES_DATA
-    : TYRES_DATA.filter((t) => t.category === activeCategory);
+  // Home page only shows the tyres marked as featured: true
+  const featuredTyres = TYRES_DATA.filter((t) => t.featured);
 
   return (
     <section id="tyres" className="relative w-full bg-[#0a0a12] py-20 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* SECTION HEADER */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4 mb-12">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-xs font-bold text-orange-400 uppercase tracking-widest">
             <Zap className="h-3.5 w-3.5" />
-            CATALOGUE & PRODUCT RANGE
+            Featured Products
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl font-extrabold text-white">
-            PREMIUM TYRES FOR EVERY <span className="text-orange-500">TERRAIN & VEHICLE</span>
+            OUR FEATURED <span className="text-orange-500">TYRE RANGE</span>
           </h2>
-          <p className="text-slate-300 text-base">
-            Explore 100% genuine tyres imported from top Japanese, European, and American manufacturers with official warranty.
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Discover our hand-picked selection of high-performance tyres built for maximum safety, speed endurance, and grip on Nepal&apos;s roads.
           </p>
-        </div>
-
-        {/* CATEGORY FILTER BUTTONS */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-          {[
-            { id: "all", label: "All Tyres" },
-            { id: "car", label: "Passenger Cars & Sedans" },
-            { id: "suv", label: "SUVs & 4x4" },
-            { id: "truck", label: "Heavy Duty & Commercial" },
-            { id: "sport", label: "Performance & Sport" },
-            { id: "bike", label: "Motorcycle & Scooter" },
-          ].map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 ${
-                activeCategory === cat.id
-                  ? "bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 shadow-lg shadow-orange-500/25 scale-105"
-                  : "border border-white/10 bg-white/5 text-slate-300 hover:border-orange-500/50 hover:bg-white/10"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
         </div>
 
         {/* TYRE CARDS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredTyres.map((tyre) => (
+          {featuredTyres.map((tyre) => (
             <div
               key={tyre.id}
               className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02]"
@@ -248,6 +111,17 @@ export default function TyreCategoryShowcase() {
 
             </div>
           ))}
+        </div>
+
+        {/* CTA TO SEPARATE FULL CATALOGUE PAGE */}
+        <div className="mt-16 text-center">
+          <Link
+            href="/tyres"
+            className="group relative inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 px-8 py-4 text-base font-bold text-slate-950 shadow-xl shadow-orange-500/20 hover:scale-105 hover:shadow-orange-500/40 transition-all duration-300"
+          >
+            <span>Explore Full Tyre Catalogue</span>
+            <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
 
       </div>
