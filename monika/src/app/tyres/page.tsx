@@ -1,13 +1,17 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
-import { Search, SlidersHorizontal, Info, Phone, Disc, MapPin, Wrench } from "lucide-react";
+import { Search, SlidersHorizontal, Info, Phone, Disc, MapPin, Wrench, ArrowRightLeft, Trash2, X } from "lucide-react";
 import { TYRES_DATA, TyreItem } from "@/data/tyres";
 
 export default function TyresPage() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTyre, setSelectedTyre] = useState<TyreItem | null>(null);
+  const [sortBy, setSortBy] = useState<"name" | "price-asc" | "price-desc" | "grip">("name");
+  const [comparedTyres, setComparedTyres] = useState<TyreItem[]>([]);
+  const [showComparison, setShowComparison] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -19,6 +23,29 @@ export default function TyresPage() {
     }
   }, []);
 
+  const handleToggleCompare = (tyre: TyreItem) => {
+    setComparedTyres((prev) => {
+      const exists = prev.find((t) => t.id === tyre.id);
+      if (exists) {
+        return prev.filter((t) => t.id !== tyre.id);
+      }
+      if (prev.length >= 3) {
+        alert("You can compare up to 3 tyres at a time.");
+        return prev;
+      }
+      return [...prev, tyre];
+    });
+  };
+
+  const getMinPrice = (priceStr: string) => {
+    if (priceStr.toLowerCase().includes("call")) return 999999;
+    const matches = priceStr.match(/\d+[,]?\d*/g);
+    if (matches && matches.length > 0) {
+      return parseInt(matches[0].replace(/,/g, ""), 10);
+    }
+    return 0;
+  };
+
   // Filter based on both Search Query (brand, size, name) and Active Category
   const filteredTyres = TYRES_DATA.filter((tyre) => {
     const matchesCategory = activeCategory === "all" || tyre.category === activeCategory;
@@ -29,6 +56,20 @@ export default function TyresPage() {
       tyre.description.toLowerCase().includes(searchQuery.toLowerCase());
     
     return matchesCategory && matchesSearch;
+  });
+
+  // Sort filtered tyres
+  const sortedTyres = [...filteredTyres].sort((a, b) => {
+    if (sortBy === "price-asc") {
+      return getMinPrice(a.priceEstimate) - getMinPrice(b.priceEstimate);
+    }
+    if (sortBy === "price-desc") {
+      return getMinPrice(b.priceEstimate) - getMinPrice(a.priceEstimate);
+    }
+    if (sortBy === "grip") {
+      return a.wetGrip.localeCompare(b.wetGrip);
+    }
+    return a.name.localeCompare(b.name);
   });
 
   return (
@@ -50,10 +91,10 @@ export default function TyresPage() {
           
           {/* SEARCH & FILTERS PANEL */}
           <div className="glass-panel p-6 rounded-3xl border border-white/10 shadow-2xl mb-12 space-y-6">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
               
               {/* Search Bar Input */}
-              <div className="relative w-full md:w-96 flex items-center">
+              <div className="relative w-full lg:w-96 flex items-center">
                 <Search className="absolute left-4 h-4 w-4 text-orange-500" />
                 <input
                   type="text"
@@ -64,10 +105,26 @@ export default function TyresPage() {
                 />
               </div>
 
-              {/* Status Indicator */}
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                <SlidersHorizontal className="h-4 w-4 text-orange-500" />
-                Showing {filteredTyres.length} of {TYRES_DATA.length} Tyres
+              {/* Sorting and Summary */}
+              <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto justify-between lg:justify-end">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400 font-semibold whitespace-nowrap">Sort By:</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as any)}
+                    className="rounded-xl border border-white/10 bg-[#141420] px-3 py-2 text-xs font-bold text-white outline-none focus:border-orange-500 cursor-pointer"
+                  >
+                    <option value="name">Name (A-Z)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
+                    <option value="grip">Wet Grip (A-Z)</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
+                  <SlidersHorizontal className="h-4 w-4 text-orange-500" />
+                  Showing {sortedTyres.length} of {TYRES_DATA.length} Tyres
+                </div>
               </div>
             </div>
 
@@ -99,9 +156,9 @@ export default function TyresPage() {
           </div>
 
           {/* CATALOG GRID */}
-          {filteredTyres.length > 0 ? (
+          {sortedTyres.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredTyres.map((tyre) => (
+              {sortedTyres.map((tyre) => (
                 <div
                   key={tyre.id}
                   className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:scale-[1.02] border border-white/5"
@@ -165,19 +222,32 @@ export default function TyresPage() {
                   </div>
 
                   {/* CTA CARD FOOTER */}
-                  <div className="mt-6 flex items-center justify-between gap-3 pt-4 border-t border-white/10">
+                  <div className="mt-6 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3 pt-4 border-t border-white/10">
                     <div>
                       <div className="text-[10px] uppercase tracking-wider text-slate-400">Est. Price</div>
-                      <div className="font-heading text-base font-bold text-orange-400">{tyre.priceEstimate}</div>
+                      <div className="font-heading text-sm font-bold text-orange-400">{tyre.priceEstimate}</div>
                     </div>
 
-                    <button
-                      onClick={() => setSelectedTyre(tyre)}
-                      className="flex items-center gap-2 rounded-xl bg-orange-500/20 px-4 py-2 text-xs font-bold text-orange-400 border border-orange-500/30 hover:bg-orange-500 hover:text-slate-950 transition-all"
-                    >
-                      <Info className="h-3.5 w-3.5" />
-                      Quick Details
-                    </button>
+                    <div className="flex gap-2 w-full xl:w-auto">
+                      <button
+                        onClick={() => handleToggleCompare(tyre)}
+                        className={`flex flex-1 xl:flex-none items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all border ${
+                          comparedTyres.some((t) => t.id === tyre.id)
+                            ? "bg-amber-500/20 text-amber-400 border-amber-500/50"
+                            : "bg-white/5 text-slate-400 border-white/10 hover:border-amber-500/40 hover:text-amber-400"
+                        }`}
+                      >
+                        {comparedTyres.some((t) => t.id === tyre.id) ? "✓ Compared" : "+ Compare"}
+                      </button>
+
+                      <button
+                        onClick={() => setSelectedTyre(tyre)}
+                        className="flex flex-1 xl:flex-none items-center justify-center gap-1.5 rounded-xl bg-orange-500/20 px-3 py-2 text-xs font-bold text-orange-400 border border-orange-500/30 hover:bg-orange-500 hover:text-slate-950 transition-all"
+                      >
+                        <Info className="h-3.5 w-3.5" />
+                        Details
+                      </button>
+                    </div>
                   </div>
 
                 </div>
@@ -205,6 +275,55 @@ export default function TyresPage() {
         </div>
       </section>
 
+      {/* COMPARISON TRAY BAR */}
+      {comparedTyres.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c14]/95 border-t border-white/10 py-4 px-6 backdrop-blur-md shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+          <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <ArrowRightLeft className="h-5 w-5 text-orange-500" />
+              <div>
+                <h4 className="text-sm font-bold text-white">Tyre Comparison ({comparedTyres.length}/3)</h4>
+                <p className="text-xs text-slate-400 hidden sm:block">Select up to 3 tyres to compare features side-by-side</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                {comparedTyres.map((tyre) => (
+                  <div key={tyre.id} className="relative group bg-white/5 border border-white/10 rounded-xl p-1.5 flex items-center gap-2 pr-6">
+                    <img src={tyre.image} alt={tyre.name} className="h-7 w-7 object-contain" />
+                    <span className="text-[11px] font-bold text-white truncate max-w-[80px]">{tyre.name}</span>
+                    <button
+                      onClick={() => handleToggleCompare(tyre)}
+                      className="absolute top-1 right-1 text-slate-400 hover:text-white"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowComparison(true)}
+                  disabled={comparedTyres.length < 2}
+                  className="rounded-xl bg-orange-500 text-slate-950 px-5 py-2.5 text-xs font-bold shadow-md hover:bg-orange-400 disabled:opacity-50 disabled:hover:bg-orange-500 transition-colors"
+                >
+                  Compare Now
+                </button>
+                <button
+                  onClick={() => setComparedTyres([])}
+                  className="rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs font-bold text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                  title="Clear Comparison"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 3. VALUE PROPOSITION HUB */}
       <section className="py-20 bg-gradient-to-b from-[#050508] to-[#040407] border-t border-white/5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -224,7 +343,7 @@ export default function TyresPage() {
                 </p>
               </div>
               <div className="lg:col-span-4 flex flex-col gap-3 text-center sm:text-left bg-black/40 p-6 rounded-2xl border border-white/5">
-                <div className="text-xs text-slate-400">Head Office Hotline</div>
+                <div className="text-xs text-slate-400">Head Office Helpline</div>
                 <a href="tel:+9779851000000" className="font-heading text-2xl sm:text-3xl font-bold text-orange-400 hover:text-orange-300 transition-colors">
                   +977 98510-00000
                 </a>
@@ -239,7 +358,7 @@ export default function TyresPage() {
 
       {/* QUICK MODAL DETAIL */}
       {selectedTyre && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-xl rounded-3xl border border-white/15 bg-[#12121e] p-6 sm:p-8 text-white shadow-2xl">
             <button
               onClick={() => setSelectedTyre(null)}
@@ -256,12 +375,12 @@ export default function TyresPage() {
             </div>
 
             <div className="flex justify-center py-4">
-              <img src={selectedTyre.image} alt={selectedTyre.name} className="h-40 object-contain" />
+              <img src={selectedTyre.image} alt={selectedTyre.name} className="h-40 object-contain animate-[float_4s_ease-in-out_infinite]" />
             </div>
 
             <p className="text-sm text-slate-300 mb-4">{selectedTyre.description}</p>
 
-            <div className="grid grid-cols-2 gap-3 text-xs mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
+            <div className="grid grid-cols-2 gap-3 text-xs mb-6 bg-white/5 p-4 rounded-2xl border border-white/5 font-mono">
               <div>Size: <strong className="text-white">{selectedTyre.size}</strong></div>
               <div>Load Index: <strong className="text-white">{selectedTyre.loadIndex}</strong></div>
               <div>Speed Index: <strong className="text-white">{selectedTyre.speedRating}</strong></div>
@@ -281,6 +400,124 @@ export default function TyresPage() {
                 className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-300 hover:bg-white/10"
               >
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* COMPARISON MODAL */}
+      {showComparison && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#12121e] p-6 sm:p-8 text-white shadow-2xl">
+            <button
+              onClick={() => setShowComparison(false)}
+              className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-slate-400 hover:text-white"
+            >
+              ✕
+            </button>
+
+            <h3 className="font-heading text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <ArrowRightLeft className="text-orange-500 h-6 w-6" />
+              Side-by-Side Tyre Comparison
+            </h3>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-4 pr-4 font-bold text-slate-400 uppercase tracking-wider text-xs">Specification</th>
+                    {comparedTyres.map((tyre) => (
+                      <th key={tyre.id} className="py-4 px-4 min-w-[200px]">
+                        <div className="flex flex-col items-center text-center space-y-2">
+                          <img src={tyre.image} alt={tyre.name} className="h-20 object-contain my-2" />
+                          <span className="text-[10px] bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-md font-extrabold uppercase">{tyre.brand}</span>
+                          <span className="font-heading text-lg font-bold text-white">{tyre.name}</span>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Estimated Price</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 font-bold text-orange-400">{tyre.priceEstimate}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Tyre Size</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 font-semibold text-slate-200">{tyre.size}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Category</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 capitalize text-slate-200">{tyre.category}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Speed Rating</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 text-slate-200">{tyre.speedRating}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Load Index</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 text-slate-200">{tyre.loadIndex}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Wet Grip Class</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4">
+                        <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-bold ${
+                          tyre.wetGrip === "A" ? "bg-emerald-500/20 text-emerald-400" : "bg-amber-500/20 text-amber-400"
+                        }`}>{tyre.wetGrip} (Excellent)</span>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Fuel Efficiency</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4">
+                        <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-bold ${
+                          tyre.fuelEfficiency === "A" ? "bg-emerald-500/20 text-emerald-400" : "bg-amber-500/20 text-amber-400"
+                        }`}>{tyre.fuelEfficiency}</span>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Noise Level</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 text-slate-200 font-mono">{tyre.noise}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 text-xs font-semibold text-slate-400">Description</td>
+                    {comparedTyres.map((tyre) => (
+                      <td key={tyre.id} className="py-3 px-4 text-slate-400 text-xs leading-relaxed max-w-[250px]">{tyre.description}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-8 flex justify-end gap-3">
+              <a
+                href="tel:+9779851000000"
+                className="flex items-center gap-2 rounded-xl bg-orange-500 py-3 px-6 text-sm font-bold text-slate-950 shadow-lg hover:bg-orange-400"
+              >
+                <Phone className="h-4 w-4" />
+                Call Desk For Wholesale Quote
+              </a>
+              <button
+                onClick={() => setShowComparison(false)}
+                className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-slate-300 hover:bg-white/10"
+              >
+                Go Back
               </button>
             </div>
           </div>

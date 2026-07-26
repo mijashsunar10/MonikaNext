@@ -1,4 +1,5 @@
 import AboutSection from "@/components/AboutSection";
+import AboutTimeline from "@/components/AboutTimeline";
 import Footer from "@/components/Footer";
 import { ShieldCheck, Target, Award, Users } from "lucide-react";
 
@@ -85,8 +86,13 @@ export default function AboutPage() {
 
           </div>
 
+          {/* INTERACTIVE TIMELINE */}
+          <div className="mt-16">
+            <AboutTimeline />
+          </div>
+
           {/* HISTORICAL WORKSHOP BRIEF */}
-          <div className="mt-16 rounded-3xl border border-white/10 bg-[#0e0e1a] p-8 lg:p-12">
+          <div className="mt-16 rounded-3xl border border-white/10 bg-[#0c0c14] p-8 lg:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8 space-y-4">
                 <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">

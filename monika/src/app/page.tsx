@@ -1,5 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import BrandMarquee from "@/components/BrandMarquee";
+import FeaturedShowcase from "@/components/FeaturedShowcase";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -17,7 +19,13 @@ export default function Home() {
       {/* 2. AUTHORIZED BRAND MARQUEE */}
       <BrandMarquee />
 
-      {/* 3. FOOTER */}
+      {/* 3. POPULAR PRODUCTS SHOWCASE & WORKFLOW */}
+      <FeaturedShowcase />
+
+      {/* 4. FREQUENTLY ASKED QUESTIONS */}
+      <FaqSection />
+
+      {/* 5. FOOTER */}
       <Footer />
     </div>
   );
