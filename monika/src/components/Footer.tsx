@@ -59,11 +59,11 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               <li><Link href="/" className="hover:text-orange-500 transition-colors">Home Page</Link></li>
               <li><Link href="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-              <li><Link href="/#finder" className="hover:text-orange-500 transition-colors">Tyre Finder Tool</Link></li>
+              <li><Link href="/tyre-finder" className="hover:text-orange-500 transition-colors">Tyre Finder Tool</Link></li>
               <li><Link href="/tyres?category=car" className="hover:text-orange-500 transition-colors">Passenger Car Tyres</Link></li>
               <li><Link href="/tyres?category=suv" className="hover:text-orange-500 transition-colors">SUV & 4x4 Off-Road</Link></li>
               <li><Link href="/tyres?category=truck" className="hover:text-orange-500 transition-colors">Heavy Truck Tyres</Link></li>
-              <li><Link href="/#why-us" className="hover:text-orange-500 transition-colors">Wheel Alignment Services</Link></li>
+              <li><Link href="/why-us" className="hover:text-orange-500 transition-colors">Wheel Alignment Services</Link></li>
             </ul>
           </div>
 

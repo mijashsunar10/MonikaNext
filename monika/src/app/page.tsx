@@ -1,8 +1,5 @@
 import HeroSection from "@/components/HeroSection";
 import BrandMarquee from "@/components/BrandMarquee";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -20,16 +17,7 @@ export default function Home() {
       {/* 2. AUTHORIZED BRAND MARQUEE */}
       <BrandMarquee />
 
-      {/* 3. WHY CHOOSE MONIKA TYRE SUPPLIERS */}
-      <WhyChooseUs />
-
-      {/* 4. CUSTOMER TESTIMONIALS & REVIEWS */}
-      <TestimonialsSection />
-
-      {/* 5. WHOLESALE & RETAIL CONTACT CTA */}
-      <ContactCTA />
-
-      {/* 6. FOOTER */}
+      {/* 3. FOOTER */}
       <Footer />
     </div>
   );

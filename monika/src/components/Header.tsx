@@ -8,10 +8,10 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/tyres", label: "Featured Tyres" },
-  { href: "/#finder", label: "Tyre Finder" },
-  { href: "/#why-us", label: "Why Choose Us" },
-  { href: "/#testimonials", label: "Reviews" },
-  { href: "/#contact", label: "Contact Us" },
+  { href: "/tyre-finder", label: "Tyre Finder" },
+  { href: "/why-us", label: "Why Choose Us" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export default function Header() {
@@ -105,15 +105,15 @@ export default function Header() {
             <Search className="h-4 w-4" />
           </button>
 
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-orange-500 to-amber-600 px-6 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-orange-500/25 transition-all duration-300 hover:scale-105 hover:shadow-orange-500/40"
           >
             <span className="relative z-10 flex items-center gap-2">
               <Phone className="h-4 w-4 fill-slate-950" />
               Wholesale Inquiry
             </span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Controls */}
