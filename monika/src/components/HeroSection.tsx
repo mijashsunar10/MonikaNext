@@ -2,8 +2,15 @@
 
 import { useState } from "react";
 import { ArrowRight, ShieldCheck, Wrench, Search } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
+  const getCategoryFromVehicle = (type: string) => {
+    if (type.includes("SUV")) return "suv";
+    if (type.includes("Truck")) return "truck";
+    if (type.includes("Motorcycle")) return "bike";
+    return "car";
+  };
   const [activeTab, setActiveTab] = useState<"size" | "vehicle">("size");
   const [vehicleType, setVehicleType] = useState("Car / Sedan");
   const [tyreWidth, setTyreWidth] = useState("195");
@@ -59,13 +66,13 @@ export default function HeroSection() {
 
             {/* HERO CALL TO ACTIONS */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#tyres"
+              <Link
+                href="/tyres"
                 className="group relative inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-base font-bold text-slate-950 shadow-xl shadow-orange-500/30 transition-all duration-300 hover:scale-105 hover:shadow-orange-500/50"
               >
                 <span>Explore Tyres</span>
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </Link>
 
               <a
                 href="#contact"
@@ -227,13 +234,13 @@ export default function HeroSection() {
                 </select>
               </div>
 
-              <a
-                href="#tyres"
+              <Link
+                href={`/tyres?search=${tyreWidth}/${aspectRatio}%20R${rimSize}`}
                 className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg hover:bg-orange-400 transition-all cursor-pointer"
               >
                 <Search className="h-4 w-4" />
                 Search Tyres ({tyreWidth}/{aspectRatio} R{rimSize})
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
@@ -261,13 +268,13 @@ export default function HeroSection() {
                 </select>
               </div>
 
-              <a
-                href="#tyres"
+              <Link
+                href={`/tyres?category=${getCategoryFromVehicle(vehicleType)}`}
                 className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg hover:bg-orange-400 transition-all"
               >
                 <Search className="h-4 w-4" />
                 Find Tyres for {vehicleType}
-              </a>
+              </Link>
             </div>
           )}
         </div>

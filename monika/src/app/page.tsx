@@ -1,7 +1,5 @@
 import HeroSection from "@/components/HeroSection";
 import BrandMarquee from "@/components/BrandMarquee";
-import AboutSection from "@/components/AboutSection";
-import TyreCategoryShowcase from "@/components/TyreCategoryShowcase";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactCTA from "@/components/ContactCTA";
@@ -22,22 +20,16 @@ export default function Home() {
       {/* 2. AUTHORIZED BRAND MARQUEE */}
       <BrandMarquee />
 
-      {/* 3. ABOUT US INTRO SECTION */}
-      <AboutSection />
-
-      {/* 4. PRODUCT CATALOG & CATEGORY FILTER */}
-      <TyreCategoryShowcase />
-
-      {/* 5. WHY CHOOSE MONIKA TYRE SUPPLIERS */}
+      {/* 3. WHY CHOOSE MONIKA TYRE SUPPLIERS */}
       <WhyChooseUs />
 
-      {/* 6. CUSTOMER TESTIMONIALS & REVIEWS */}
+      {/* 4. CUSTOMER TESTIMONIALS & REVIEWS */}
       <TestimonialsSection />
 
-      {/* 7. WHOLESALE & RETAIL CONTACT CTA */}
+      {/* 5. WHOLESALE & RETAIL CONTACT CTA */}
       <ContactCTA />
 
-      {/* 8. FOOTER */}
+      {/* 6. FOOTER */}
       <Footer />
     </div>
   );

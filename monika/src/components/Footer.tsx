@@ -44,12 +44,12 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="font-heading text-lg font-bold text-white uppercase tracking-wider">Top Brands</h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Bridgestone Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Yokohama Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Michelin Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Pirelli Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">Goodyear Tyres</a></li>
-              <li><a href="#tyres" className="hover:text-orange-500 transition-colors">MRF & CEAT Radials</a></li>
+              <li><Link href="/tyres?search=Bridgestone" className="hover:text-orange-500 transition-colors">Bridgestone Tyres</Link></li>
+              <li><Link href="/tyres?search=Yokohama" className="hover:text-orange-500 transition-colors">Yokohama Tyres</Link></li>
+              <li><Link href="/tyres?search=Michelin" className="hover:text-orange-500 transition-colors">Michelin Tyres</Link></li>
+              <li><Link href="/tyres?search=Pirelli" className="hover:text-orange-500 transition-colors">Pirelli Tyres</Link></li>
+              <li><Link href="/tyres?search=Goodyear" className="hover:text-orange-500 transition-colors">Goodyear Tyres</Link></li>
+              <li><Link href="/tyres?search=MRF" className="hover:text-orange-500 transition-colors">MRF & CEAT Radials</Link></li>
             </ul>
           </div>
 
@@ -60,9 +60,9 @@ export default function Footer() {
               <li><Link href="/" className="hover:text-orange-500 transition-colors">Home Page</Link></li>
               <li><Link href="/about" className="hover:text-orange-500 transition-colors">About Us</Link></li>
               <li><Link href="/#finder" className="hover:text-orange-500 transition-colors">Tyre Finder Tool</Link></li>
-              <li><Link href="/tyres" className="hover:text-orange-500 transition-colors">Passenger Car Tyres</Link></li>
-              <li><Link href="/tyres" className="hover:text-orange-500 transition-colors">SUV & 4x4 Off-Road</Link></li>
-              <li><Link href="/tyres" className="hover:text-orange-500 transition-colors">Heavy Truck Tyres</Link></li>
+              <li><Link href="/tyres?category=car" className="hover:text-orange-500 transition-colors">Passenger Car Tyres</Link></li>
+              <li><Link href="/tyres?category=suv" className="hover:text-orange-500 transition-colors">SUV & 4x4 Off-Road</Link></li>
+              <li><Link href="/tyres?category=truck" className="hover:text-orange-500 transition-colors">Heavy Truck Tyres</Link></li>
               <li><Link href="/#why-us" className="hover:text-orange-500 transition-colors">Wheel Alignment Services</Link></li>
             </ul>
           </div>

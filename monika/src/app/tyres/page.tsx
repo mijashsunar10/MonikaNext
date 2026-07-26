@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Footer from "@/components/Footer";
 import { Search, SlidersHorizontal, Info, Phone, Disc, MapPin, Wrench } from "lucide-react";
 import { TYRES_DATA, TyreItem } from "@/data/tyres";
@@ -9,6 +8,16 @@ export default function TyresPage() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTyre, setSelectedTyre] = useState<TyreItem | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get("search");
+      const category = params.get("category");
+      if (search) setSearchQuery(search);
+      if (category) setActiveCategory(category);
+    }
+  }, []);
 
   // Filter based on both Search Query (brand, size, name) and Active Category
   const filteredTyres = TYRES_DATA.filter((tyre) => {
