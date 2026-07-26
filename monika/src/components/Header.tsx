@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Search, Disc, Menu, X, ShieldCheck } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,15 +86,22 @@ export default function Header() {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-semibold text-slate-300 transition-all duration-200 hover:text-orange-500 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-orange-500 hover:after:w-full after:transition-all"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-semibold transition-all duration-200 py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-orange-500 after:transition-all ${
+                  isActive
+                    ? "text-orange-500 after:w-full"
+                    : "text-slate-300 hover:text-orange-500 after:w-0 hover:after:w-full"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Desktop CTA & Search */}
@@ -161,16 +170,21 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-white/10 bg-[#0c0c14] px-6 py-6 lg:hidden">
           <div className="flex flex-col gap-4">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-semibold text-slate-200 hover:text-orange-500 transition-colors py-1"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-base font-semibold transition-colors py-1 ${
+                    isActive ? "text-orange-500" : "text-slate-200 hover:text-orange-500"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
               <a
                 href="tel:+9779851000000"
