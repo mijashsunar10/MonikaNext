@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Zap, Info, Phone, ArrowRight } from "lucide-react";
 import { TYRES_DATA, TyreItem } from "@/data/tyres";
+import TyreRadarChart from "./TyreRadarChart";
 
 export default function TyreCategoryShowcase() {
   const [selectedTyre, setSelectedTyre] = useState<TyreItem | null>(null);
@@ -16,7 +17,7 @@ export default function TyreCategoryShowcase() {
       {/* Background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full px-4 sm:px-8 lg:px-16 relative z-10">
         
         {/* SECTION HEADER */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4 mb-16">
@@ -128,8 +129,8 @@ export default function TyreCategoryShowcase() {
 
       {/* QUICK MODAL DETAIL */}
       {selectedTyre && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-xl rounded-3xl border border-white/15 bg-[#12121e] p-6 sm:p-8 text-white shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-2xl rounded-3xl border border-white/15 bg-[#12121e] p-6 sm:p-8 text-white shadow-2xl">
             <button
               onClick={() => setSelectedTyre(null)}
               className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-slate-400 hover:text-white"
@@ -137,24 +138,43 @@ export default function TyreCategoryShowcase() {
               ✕
             </button>
 
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-2">
               <span className="rounded-lg bg-orange-500/20 px-3 py-1 font-heading text-xs font-bold text-orange-400">
                 {selectedTyre.brand}
               </span>
               <h3 className="font-heading text-2xl font-bold text-white">{selectedTyre.name}</h3>
             </div>
 
-            <div className="flex justify-center py-4">
-              <img src={selectedTyre.image} alt={selectedTyre.name} className="h-40 object-contain" />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center my-6">
+              {/* Left Column: Image & Radar Chart */}
+              <div className="flex flex-col items-center justify-center gap-4">
+                <div className="relative flex h-36 w-full items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-orange-500/5 to-transparent pointer-events-none" />
+                  <img src={selectedTyre.image} alt={selectedTyre.name} className="h-full object-contain animate-float relative z-10" />
+                </div>
+                <div className="w-full">
+                  <TyreRadarChart tyres={[selectedTyre]} />
+                </div>
+              </div>
 
-            <p className="text-sm text-slate-300 mb-4">{selectedTyre.description}</p>
+              {/* Right Column: Specs & Description */}
+              <div className="space-y-4">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-white/[0.01] p-3.5 rounded-2xl border border-white/5 font-medium">
+                  {selectedTyre.description}
+                </p>
 
-            <div className="grid grid-cols-2 gap-3 text-xs mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
-              <div>Size: <strong className="text-white">{selectedTyre.size}</strong></div>
-              <div>Load Index: <strong className="text-white">{selectedTyre.loadIndex}</strong></div>
-              <div>Speed Index: <strong className="text-white">{selectedTyre.speedRating}</strong></div>
-              <div>Est. Price: <strong className="text-orange-400">{selectedTyre.priceEstimate}</strong></div>
+                <div className="grid grid-cols-1 gap-2.5 text-[11px] font-mono bg-[#0a0a10]/60 p-4 rounded-2xl border border-white/5">
+                  <div>Size: <strong className="text-white">{selectedTyre.size}</strong></div>
+                  <div>Load Index: <strong className="text-slate-300">{selectedTyre.loadIndex}</strong></div>
+                  <div>Speed Rating: <strong className="text-slate-300">{selectedTyre.speedRating}</strong></div>
+                  <div>Wet Grip Class: <strong className="text-emerald-400">{selectedTyre.wetGrip}</strong></div>
+                  <div>Fuel Saver Class: <strong className="text-amber-400">{selectedTyre.fuelEfficiency}</strong></div>
+                  <div>Noise Rating: <strong className="text-slate-300">{selectedTyre.noise}</strong></div>
+                  <div className="pt-2 border-t border-white/5 mt-1">
+                    Est. Price: <strong className="text-orange-400">{selectedTyre.priceEstimate}</strong>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center justify-between gap-4">

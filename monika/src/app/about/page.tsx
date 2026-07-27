@@ -18,7 +18,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 opacity-10 pointer-events-none z-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_80px,rgba(255,122,0,0.05)_100px)] animate-move-lines" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
+        <div className="relative z-10 w-full px-4 sm:px-8 lg:px-16 space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-xs font-bold text-orange-400 uppercase tracking-widest">
             OUR STORY
           </div>
@@ -36,7 +36,7 @@ export default function AboutPage() {
 
       {/* 3. MISSION, VISION & HISTORY */}
       <section className="py-24 bg-gradient-to-b from-[#07070a] via-[#0b0b14] to-[#040407] relative border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 lg:px-16">
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             

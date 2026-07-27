@@ -25,7 +25,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#09090d]/90 backdrop-blur-md">
       {/* Top Announcement & Info Bar */}
       <div className="hidden border-b border-white/5 bg-[#050508] py-2 text-xs font-medium text-slate-400 md:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+        <div className="w-full flex items-center justify-between px-4 sm:px-8 lg:px-16">
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5 text-amber-500 font-semibold">
               <ShieldCheck className="h-3.5 w-3.5" />
@@ -61,7 +61,7 @@ export default function Header() {
       </div>
 
       {/* Main Header Navigation */}
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="w-full flex h-20 items-center justify-between px-4 sm:px-8 lg:px-16">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 p-0.5 shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-all duration-300">

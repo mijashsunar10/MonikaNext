@@ -73,7 +73,7 @@ export default function HeroSection() {
       />
 
       {/* MAIN CONTAINER */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-12 sm:px-8 lg:px-12 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* LEFT COLUMN: HERO HEADLINE & ACTIONS (7 cols) */}

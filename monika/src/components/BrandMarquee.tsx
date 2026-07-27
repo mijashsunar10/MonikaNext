@@ -27,7 +27,7 @@ export default function BrandMarquee() {
       }`}
     >
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-4">
+      <div className="w-full px-4 sm:px-8 lg:px-16 mb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange-400">
             <Award className="h-4 w-4" />

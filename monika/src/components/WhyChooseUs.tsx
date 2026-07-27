@@ -50,7 +50,7 @@ export default function WhyChooseUs() {
       {/* BACKGROUND DECORATION */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full px-4 sm:px-8 lg:px-16 relative z-10">
         
         {/* SECTION HEADER */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4 mb-16">

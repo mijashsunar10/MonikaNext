@@ -13,7 +13,7 @@ export default function TyreFinderPage() {
       <section className="relative pt-32 pb-16 bg-gradient-to-b from-[#09090f] to-[#07070a] overflow-hidden text-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
+        <div className="relative z-10 w-full px-4 sm:px-8 lg:px-16 space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-xs font-bold text-orange-400 uppercase tracking-widest">
             FIND YOUR FIT
           </div>
@@ -28,7 +28,7 @@ export default function TyreFinderPage() {
 
       {/* 2. FINDER COMPONENT */}
       <section className="py-12 bg-gradient-to-b from-[#07070a] via-[#0b0b14] to-[#050508] relative z-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 lg:px-16">
           <TyreFinder />
         </div>
       </section>

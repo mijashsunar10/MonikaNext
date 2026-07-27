@@ -78,7 +78,7 @@ export default function TyresPage() {
       
       {/* CATALOG INTERACTION SECTION */}
       <section className="pt-28 pb-12 bg-gradient-to-b from-[#09090f] via-[#0b0b14] to-[#050508] relative z-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 lg:px-16">
           
           {/* PAGE HEADING */}
           <div className="mb-8">
@@ -279,7 +279,7 @@ export default function TyresPage() {
       {/* COMPARISON TRAY BAR */}
       {comparedTyres.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0c0c14]/95 border-t border-white/10 py-4 px-6 backdrop-blur-md shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
-          <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-4 sm:px-8 lg:px-16">
             <div className="flex items-center gap-3">
               <ArrowRightLeft className="h-5 w-5 text-orange-500" />
               <div>
@@ -327,7 +327,7 @@ export default function TyresPage() {
 
       {/* 3. VALUE PROPOSITION HUB */}
       <section className="py-20 bg-gradient-to-b from-[#050508] to-[#040407] border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-8 lg:px-16">
           <div className="rounded-3xl border border-white/10 bg-[#0e0e1a] p-8 lg:p-12 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
             

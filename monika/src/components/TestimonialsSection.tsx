@@ -29,7 +29,7 @@ const REVIEWS = [
 export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="relative w-full bg-[#0b0b14] py-24 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-8 lg:px-16">
         
         {/* HEADER */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4 mb-16">
