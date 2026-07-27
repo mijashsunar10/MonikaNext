@@ -1,6 +1,7 @@
 "use client";
 
 import { Award } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const BRANDS = [
   { name: "BRIDGESTONE", country: "Japan", highlight: "Premium Comfort & Safety" },
@@ -16,8 +17,16 @@ const BRANDS = [
 ];
 
 export default function BrandMarquee() {
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.1 });
+
   return (
-    <section className="relative w-full border-y border-white/10 bg-[#07070c] py-8 overflow-hidden">
+    <section
+      ref={revealRef as any}
+      className={`relative w-full border-y border-white/10 bg-[#07070c] py-8 overflow-hidden reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange-400">

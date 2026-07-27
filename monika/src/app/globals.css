@@ -140,3 +140,29 @@ h1, h2, h3, h4, .font-heading {
 ::-webkit-scrollbar-thumb:hover {
   background: #e06c00;
 }
+
+/* ===== SCROLL REVEAL STYLES ===== */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(35px) scale(0.98);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-stagger-item {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-element.revealed .reveal-stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+

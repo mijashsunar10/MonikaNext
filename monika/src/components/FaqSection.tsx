@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 interface FAQItem {
   question: string;
@@ -29,13 +30,19 @@ const FAQS: FAQItem[] = [
 
 export default function FaqSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.15 });
 
   const toggleFaq = (idx: number) => {
     setOpenIdx((prev) => (prev === idx ? null : idx));
   };
 
   return (
-    <section className="relative w-full bg-[#0b0b14] py-20 text-white overflow-hidden border-t border-white/5">
+    <section
+      ref={revealRef as any}
+      className={`relative w-full bg-[#0b0b14] py-20 text-white overflow-hidden border-t border-white/5 reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -60,31 +67,36 @@ export default function FaqSection() {
             return (
               <div
                 key={idx}
-                className="glass-card rounded-2xl border border-white/5 overflow-hidden transition-all duration-350"
+                style={{ transitionDelay: `${idx * 100}ms` }}
+                className="reveal-stagger-item"
               >
-                <button
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left hover:bg-white/[0.02] transition-colors"
-                >
-                  <span className="flex items-center gap-3 font-heading text-base sm:text-lg font-bold text-white pr-4">
-                    <HelpCircle className="h-5 w-5 text-orange-500 shrink-0" />
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={`h-5 w-5 text-slate-400 transition-transform duration-300 shrink-0 ${
-                      isOpen ? "rotate-180 text-orange-500" : ""
-                    }`}
-                  />
-                </button>
-
                 <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    isOpen ? "max-h-[200px] border-t border-white/5 opacity-100" : "max-h-0 opacity-0"
-                  }`}
+                  className="glass-card rounded-2xl border border-white/5 overflow-hidden transition-all duration-350"
                 >
-                  <p className="p-5 sm:p-6 text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-                    {faq.answer}
-                  </p>
+                  <button
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left hover:bg-white/[0.02] transition-colors"
+                  >
+                    <span className="flex items-center gap-3 font-heading text-base sm:text-lg font-bold text-white pr-4">
+                      <HelpCircle className="h-5 w-5 text-orange-500 shrink-0" />
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`h-5 w-5 text-slate-400 transition-transform duration-300 shrink-0 ${
+                        isOpen ? "rotate-180 text-orange-500" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                      isOpen ? "max-h-[200px] border-t border-white/5 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <p className="p-5 sm:p-6 text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
@@ -95,3 +107,4 @@ export default function FaqSection() {
     </section>
   );
 }
+

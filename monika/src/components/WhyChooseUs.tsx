@@ -1,6 +1,7 @@
 "use client";
 
 import { ShieldCheck, Truck, Wrench, Award, DollarSign, Headset } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const FEATURES = [
   {
@@ -36,8 +37,16 @@ const FEATURES = [
 ];
 
 export default function WhyChooseUs() {
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.15 });
+
   return (
-    <section id="why-us" className="relative w-full bg-[#07070d] py-24 text-white overflow-hidden">
+    <section
+      ref={revealRef as any}
+      id="why-us"
+      className={`relative w-full bg-[#07070d] py-24 text-white overflow-hidden reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
       {/* BACKGROUND DECORATION */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -63,17 +72,22 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={idx}
-                className="glass-card group relative rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-orange-500/40"
+                style={{ transitionDelay: `${idx * 100}ms` }}
+                className="reveal-stagger-item"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-orange-500 border border-orange-500/20 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-slate-950 transition-all duration-300 shadow-lg shadow-orange-500/10 mb-6">
-                  <Icon className="h-7 w-7" />
+                <div
+                  className="glass-card group relative rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-orange-500/40 h-full"
+                >
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-orange-500 border border-orange-500/20 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-slate-950 transition-all duration-300 shadow-lg shadow-orange-500/10 mb-6">
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <h3 className="font-heading text-2xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="font-heading text-2xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
             );
           })}
@@ -83,3 +97,4 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
