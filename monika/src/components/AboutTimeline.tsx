@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Landmark, Calendar, Award, Star } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 interface TimelineEvent {
   year: string;
@@ -39,12 +40,18 @@ const EVENTS: TimelineEvent[] = [
 
 export default function AboutTimeline() {
   const [activeIdx, setActiveIdx] = useState(3); // Start with 2025 active
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.1 });
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-[#0e0e1a] p-8 lg:p-12 space-y-8 relative overflow-hidden">
+    <div
+      ref={revealRef as any}
+      className={`rounded-3xl border border-white/10 bg-[#0e0e1a] p-8 lg:p-12 space-y-8 relative overflow-hidden reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
       <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 reveal-stagger-item">
         <div>
           <h3 className="font-heading text-2xl font-bold text-white">Our Journey</h3>
           <p className="text-xs text-slate-400">Click on each milestone year to see how we have evolved since 2005</p>
@@ -69,7 +76,10 @@ export default function AboutTimeline() {
       </div>
 
       {/* ACTIVE EVENT VIEW */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[160px] animate-fadeIn">
+      <div
+        style={{ transitionDelay: "150ms" }}
+        className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[160px] animate-fadeIn reveal-stagger-item"
+      >
         <div className="md:col-span-3 flex justify-center md:justify-start">
           <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-orange-500 border border-orange-500/25 shadow-xl">
             {(() => {

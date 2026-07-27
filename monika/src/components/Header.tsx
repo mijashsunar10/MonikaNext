@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: "/tyres", label: "Featured Tyres" },
   { href: "/tyre-finder", label: "Tyre Finder" },
   { href: "/tyre-calculator", label: "Tyre Calculator" },
+  { href: "/tyre-simulator", label: "Tyre Simulator" },
   { href: "/why-us", label: "Why Choose Us" },
   { href: "/reviews", label: "Reviews" },
   { href: "/contact", label: "Contact Us" },

@@ -166,3 +166,52 @@ h1, h2, h3, h4, .font-heading {
   transform: translateY(0);
 }
 
+/* ===== SIMULATOR AND CONFETTI KEYFRAMES ===== */
+@keyframes spinWheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveLines {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes floatConfetti {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-400px) rotate(720deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.animate-spin-wheel {
+  animation: spinWheel 1.2s linear infinite;
+}
+
+.animate-spin-wheel-slow {
+  animation: spinWheel 6s linear infinite;
+}
+
+.animate-floatConfetti {
+  animation: floatConfetti 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spinWheel 20s linear infinite;
+}
+

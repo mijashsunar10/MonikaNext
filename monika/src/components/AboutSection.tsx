@@ -1,10 +1,18 @@
 "use client";
 
 import { CheckCircle2, ShieldCheck, Landmark } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function AboutSection() {
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.15 });
+
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#07070a] via-[#090910] to-[#050508] py-20 sm:py-24 text-white overflow-hidden">
+    <section
+      ref={revealRef as any}
+      className={`relative w-full bg-gradient-to-b from-[#07070a] via-[#090910] to-[#050508] py-20 sm:py-24 text-white overflow-hidden reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
       {/* Premium ambient light effects */}
       <div className="absolute top-1/4 left-0 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-orange-500/10 rounded-full blur-[100px] sm:blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 translate-y-1/2 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-amber-500/5 rounded-full blur-[90px] sm:blur-[120px] pointer-events-none" />
@@ -16,7 +24,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* LEFT CONTENT (6 cols for balanced spacing) */}
-          <div className="lg:col-span-6 space-y-6 sm:space-y-7">
+          <div className="lg:col-span-6 space-y-6 sm:space-y-7 reveal-stagger-item">
             
             {/* Tag Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/5 px-4 py-1 text-xs font-bold text-orange-400 uppercase tracking-widest">
@@ -69,7 +77,7 @@ export default function AboutSection() {
           </div>
 
           {/* RIGHT IMAGE (6 cols for balanced spacing) */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 reveal-stagger-item" style={{ transitionDelay: "150ms" }}>
             <div className="relative p-2 rounded-3xl bg-gradient-to-tr from-orange-500/10 to-transparent border border-white/10 shadow-2xl shadow-orange-500/5 max-w-lg mx-auto lg:max-w-none">
               
               {/* Outer frame border accent */}
