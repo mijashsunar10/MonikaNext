@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export default function ContactCTA() {
   const [submitted, setSubmitted] = useState(false);
+  const [revealRef, isRevealed] = useScrollReveal({ threshold: 0.1 });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,13 +15,19 @@ export default function ContactCTA() {
   };
 
   return (
-    <section id="contact" className="relative w-full bg-gradient-to-b from-[#07070d] via-[#0b0b14] to-[#040408] py-24 text-white">
+    <section
+      ref={revealRef as any}
+      id="contact"
+      className={`relative w-full bg-gradient-to-b from-[#07070d] via-[#0b0b14] to-[#040408] py-24 text-white reveal-element ${
+        isRevealed ? "revealed" : ""
+      }`}
+    >
       <div className="w-full px-4 sm:px-8 lg:px-16">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* LEFT COLUMN: CONTACT DETAILS & LOCATIONS (6 cols) */}
-          <div className="lg:col-span-6 space-y-8">
+          <div className="lg:col-span-6 space-y-8 reveal-stagger-item">
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-xs font-bold text-orange-400 uppercase tracking-widest">
               GET IN TOUCH WITH OUR TYRE EXPERTS
             </div>
@@ -83,7 +91,7 @@ export default function ContactCTA() {
           </div>
 
           {/* RIGHT COLUMN: QUICK QUOTE FORM (6 cols) */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 reveal-stagger-item" style={{ transitionDelay: "150ms" }}>
             <div className="rounded-3xl border border-white/10 bg-[#10101b] p-8 backdrop-blur-xl shadow-2xl relative">
               <h3 className="font-heading text-2xl font-bold text-white mb-2">Request an Instant Quote</h3>
               <p className="text-xs text-slate-400 mb-6">Fill in your requirements and our team will call you back within 30 minutes.</p>
